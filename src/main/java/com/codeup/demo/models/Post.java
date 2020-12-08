@@ -1,22 +1,55 @@
 package com.codeup.demo.models;
 
+
+import javax.persistence.*;
+
+
+@Entity
+@Table(name = "posts")
 public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false)
     private String title;
-    private String postBody;
 
-    public Post() {
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String body;
 
+    @OneToOne
+    private User owner;
+
+    public Post() { }
+
+    public Post(String title, String body, User owner){
+        this.title = title;
+        this.body = body;
+        this.owner = owner;
     }
 
-    public Post(long id, String title, String postBody) {
+    public Post(long id, String title, String body, User owner){
         this.id = id;
         this.title = title;
-        this.postBody = postBody;
+        this.body = body;
+        this.owner = owner;
     }
-    public Post(String title, String postBody) {
-        this.title = title;
-        this.postBody = postBody;
+
+    public String getTitle(){
+        return this.title;
+    }
+
+    public String getBody(){
+        return this.body;
+    }
+
+    public void setTitle(String newTitle){
+        this.title = newTitle;
+    }
+
+    public void setBody(String newBody){
+        this.body = newBody;
     }
 
     public long getId() {
@@ -27,19 +60,11 @@ public class Post {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getPostBody() {
-        return postBody;
-    }
-
-    public void setPostBody(String postBody) {
-        this.postBody = postBody;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
